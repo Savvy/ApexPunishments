@@ -1,0 +1,25 @@
+name: ApexBans
+version: ${project.version}
+main: io.apexcreations.apexbans.ApexBans
+authors: [Majr, Savvy]
+description: Basic Punishment System
+website: https://apexcreations.github.io/
+
+commands:
+  mute:
+    description: The mute command is used to prevent players from speaking.
+    permission: apexbans.command.mute
+    permission-message: '&cNot enough permission!'
+    usage: /<command> <player> [time] [reason]
+  ban:
+    description: The ban command is used to prevent players from joining.
+    permission: apexbans.command.ban
+    permission-message: '&cNot enough permission!'
+    usage: /<command> <player> [time] [reason]
+
+permissions:
+  apexbans.command.*:
+    description: Gives access to all commands.
+    children:
+      apexbans.command.ban: true
+      apexbans.command.mute: true
