@@ -21,7 +21,7 @@ public class TimeParser {
 
     public static String toString(long seconds) {
         int day = (int) TimeUnit.SECONDS.toDays(seconds);
-        String timeLeft = null;
+        String timeLeft = "";
         if (day > 0) {
             timeLeft += day + " day(s) ";
         }

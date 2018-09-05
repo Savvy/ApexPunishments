@@ -7,15 +7,25 @@ website: https://apexcreations.github.io/
 
 commands:
   mute:
-    description: The mute command is used to prevent punishments from speaking.
+    description: The mute command is used to prevent players from speaking.
     permission: apexbans.command.mute
     permission-message: '&cNot enough permission!'
-    usage: /<command> <players> [time] [reason]
+    usage: /<command> <player> [time] [reason]
   ban:
-    description: The ban command is used to prevent punishments from joining.
+    description: The ban command is used to prevent players from joining.
     permission: apexbans.command.ban
     permission-message: '&cNot enough permission!'
-    usage: /<command> <players> [time] [reason]
+    usage: /<command> <player> [time] [reason]
+  unmute:
+    description: Unmute a player allowing them to speak
+    permission: apexbans.command.unmute
+    permission-message: '&cNot enough permission!'
+    usage: /<command> <player>
+  unban:
+    description: Unban a player allowing them to join
+    permission: apexbans.command.unban
+    permission-message: '&cNot enough permission!'
+    usage: /<command> <player>
 
 permissions:
   apexbans.command.*:
@@ -23,3 +33,5 @@ permissions:
     children:
       apexbans.command.ban: true
       apexbans.command.mute: true
+      apexbans.command.unmute: true
+      apexbans.command.unban: true

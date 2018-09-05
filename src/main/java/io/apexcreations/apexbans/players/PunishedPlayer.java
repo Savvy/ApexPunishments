@@ -32,9 +32,12 @@ public class PunishedPlayer {
     public boolean isMuted() {
         LinkedList<Punishment> entries = new LinkedList<>(punishments);
         if (!entries.isEmpty()) {
-            Punishment entry = entries.getFirst();
-            long time = (entry.getDuration() == -1) ? Long.MAX_VALUE : (System.currentTimeMillis() - entry.getCreated()) / 1000;
-            return time <= entry.getDuration();
+            for (Punishment entry : entries) {
+                if (entry instanceof Mute) {
+                    long time = (entry.getDuration() == -1) ? Long.MAX_VALUE : (System.currentTimeMillis() - entry.getCreated()) / 1000;
+                    return time <= entry.getDuration() && entry.isActive();
+                }
+            }
         }
         return false;
     }
@@ -45,7 +48,7 @@ public class PunishedPlayer {
             for (Punishment entry : entries) {
                 if (entry instanceof Ban) {
                     long time = (entry.getDuration() == -1) ? Long.MAX_VALUE : (System.currentTimeMillis() - entry.getCreated()) / 1000;
-                    return time <= entry.getDuration();
+                    return time <= entry.getDuration() && entry.isActive();
                 }
             }
         }
@@ -62,16 +65,26 @@ public class PunishedPlayer {
 
     public void unban() {
         for (Punishment entry : punishments) {
-            if (entry instanceof Ban) {
-                entry.setActive(false);
+            try {
+                if (entry instanceof Ban) {
+                    entry.setActive(false);
+                }
+                entry.save();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }
 
     public void unmute() {
         for (Punishment entry : punishments) {
-            if (entry instanceof Mute) {
-                entry.setActive(false);
+            try {
+                if (entry instanceof Mute) {
+                    entry.setActive(false);
+                }
+                entry.save();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }

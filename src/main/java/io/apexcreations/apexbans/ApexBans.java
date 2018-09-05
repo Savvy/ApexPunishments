@@ -5,8 +5,11 @@ import co.aikar.idb.Database;
 import io.apexcreations.CommandHandler;
 import io.apexcreations.apexbans.commands.BanCommand;
 import io.apexcreations.apexbans.commands.MuteCommand;
+import io.apexcreations.apexbans.commands.UnbanCommand;
+import io.apexcreations.apexbans.commands.UnmuteCommand;
 import io.apexcreations.apexbans.listeners.PlayerListeners;
 import io.apexcreations.apexbans.players.PunishedPlayer;
+import io.apexcreations.apexbans.punishments.PunishmentQueries;
 import io.apexcreations.apexbans.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -45,6 +48,8 @@ public final class ApexBans extends JavaPlugin {
 
         getCommand("mute").setExecutor(new MuteCommand());
         getCommand("ban").setExecutor(new BanCommand());
+        getCommand("unban").setExecutor(new UnbanCommand());
+        getCommand("unmute").setExecutor(new UnmuteCommand());
 
         Bukkit.getPluginManager().registerEvents(new PlayerListeners(), this);
     }

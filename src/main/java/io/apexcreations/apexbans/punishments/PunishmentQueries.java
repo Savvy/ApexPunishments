@@ -1,4 +1,4 @@
-package io.apexcreations.apexbans;
+package io.apexcreations.apexbans.punishments;
 
 public enum PunishmentQueries {
 
