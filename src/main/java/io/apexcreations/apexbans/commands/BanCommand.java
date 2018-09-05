@@ -9,8 +9,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import java.util.*;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class BanCommand implements CommandExecutor {
 
@@ -41,7 +43,7 @@ public class BanCommand implements CommandExecutor {
         }
 
         PunishedPlayer punished = PunishedPlayer.of(target);
-        punished.mute(commandSender.getName(), reason, duration);
+        punished.ban(commandSender.getName(), reason, duration);
         Messages.get().sendMessage(commandSender, "bans.punished", map);
         return true;
     }

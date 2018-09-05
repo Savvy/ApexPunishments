@@ -24,6 +24,7 @@ public class PunishedPlayer {
         this.muteEntries = Sets.newConcurrentHashSet();
         this.banEntries = Sets.newConcurrentHashSet();
 
+        load();
         ApexBans.getInstance().addPlayer(this);
     }
 

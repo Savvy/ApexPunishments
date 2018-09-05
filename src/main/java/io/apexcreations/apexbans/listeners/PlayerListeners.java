@@ -38,7 +38,7 @@ public class PlayerListeners implements Listener {
     }
 
     @EventHandler
-    public void onJoin(AsyncPlayerPreLoginEvent event) {
+    public void onLogin(AsyncPlayerPreLoginEvent event) {
         PunishedPlayer player = PunishedPlayer.of(event.getUniqueId());
         if (player.isBanned()) {
             LinkedList<PunishmentEntry> entrySet = new LinkedList<>(player.getActiveMutes());
