@@ -29,23 +29,19 @@ public class BanCommand implements CommandExecutor {
         String reason = stringList.subList(2, stringList.size()).toString().replace(", ", " ").replace("[", "").replace("]", "");
 
         OfflinePlayer target = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[0]));
+        HashMap<String, String> map = new HashMap<>();
+        map.put("punisher", commandSender.getName());
+        map.put("nl", "\n");
+        map.put("player", target.getName());
+        map.put("reason", reason);
+        map.put("time", time);
+
         if (target.isOnline()) {
-            HashMap<String, String> map = new HashMap<>();
-            map.put("punisher", commandSender.getName());
-            map.put("nl", "\n");
-            map.put("reason", reason);
-            map.put("time", time);
-            target.getPlayer().kickPlayer("You have been banned!");
+            target.getPlayer().kickPlayer(Messages.get().getMessage("bans.activate", map));
         }
 
         PunishedPlayer punished = PunishedPlayer.of(target);
         punished.mute(commandSender.getName(), reason, duration);
-
-        HashMap<String, String> map = new HashMap<>();
-        map.put("punisher", commandSender.getName());
-        map.put("player", target.getName());
-        map.put("reason", reason);
-        map.put("time", time);
         Messages.get().sendMessage(commandSender, "bans.punished", map);
         return true;
     }

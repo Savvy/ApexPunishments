@@ -53,6 +53,15 @@ public class Messages {
         sender.sendMessage(translateAndReplace(config.getString(message), placeholders));
     }
 
+    public String getMessage(String message,
+                            Map<String, String> placeholders) {
+        if (!isPresent(message)) {
+            logger.severe("[Messages] Could not find message '" + message + "'!");
+            return null;
+        }
+        return translateAndReplace(config.getString(message), placeholders);
+    }
+
     private boolean isPresent(String message) {
         return config.isSet(message);
     }

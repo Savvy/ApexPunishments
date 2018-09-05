@@ -43,9 +43,13 @@ public class PlayerListeners implements Listener {
         if (player.isBanned()) {
             LinkedList<PunishmentEntry> entrySet = new LinkedList<>(player.getActiveMutes());
             PunishmentEntry entry = entrySet.getFirst();
-            event.setKickMessage(ChatColor.RED + "You were banned for "
-                    + ChatColor.DARK_RED + (entry.getReason().isEmpty() ? "Spamming" : entry.getReason()) + ChatColor.RED
-                    + " by " + ChatColor.DARK_RED + entry.getPunisher());
+            HashMap<String, String> map = new HashMap<>();
+            map.put("punisher", event.getName());
+            map.put("nl", "\n");
+            map.put("player", entry.getPunisher());
+            map.put("reason", entry.getReason());
+            map.put("time", TimeParser.toString(entry.getDuration()));
+            event.setKickMessage(Messages.get().getMessage("bans.activate", map));
             event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_BANNED);
         }
     }
