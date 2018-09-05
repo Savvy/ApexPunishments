@@ -20,7 +20,7 @@ public class Ban implements Punishment {
 
     @Override
     public String getTable() {
-        return "apex_mutes";
+        return "apex_bans";
     }
 
     @Override

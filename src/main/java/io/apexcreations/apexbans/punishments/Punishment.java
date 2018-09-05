@@ -28,7 +28,7 @@ public interface Punishment {
         if (time <= getDuration()) {
             ApexBans.getDatabase().executeUpdate("REPLACE INTO `?`" +
                     "(uniqueId, type, punisher, duration, startTime)" +
-                    "VALUES (?, ?, ?, ?, ?);", getTable(), getUniqueId().toString(), getPunisher(), getDuration(), getCreated());
+                    "VALUES (?, ?, ?, ?, ?);", getTable(), getUniqueId().toString(), getReason(), getPunisher(), getDuration(), getCreated());
         }
     }
 }
