@@ -11,6 +11,7 @@ import io.apexcreations.apexbans.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -34,6 +35,13 @@ public final class ApexBans extends JavaPlugin {
         database = BukkitDB.createHikariDatabase(this, getConfig().getString("mysql.username"),
                 getConfig().getString("mysql.password"), getConfig().getString("mysql.database"),
                 getConfig().getString("mysql.hostname"));
+
+        try {
+            database.executeUpdate(PunishmentQueries.CREATE_MUTE_TABLE.getQuery());
+            database.executeUpdate(PunishmentQueries.CREATE_BAN_TABLE.getQuery());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         getCommand("mute").setExecutor(new MuteCommand());
         getCommand("ban").setExecutor(new BanCommand());
