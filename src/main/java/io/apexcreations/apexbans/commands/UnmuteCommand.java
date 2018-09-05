@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
 
-public class UnbanCommand implements CommandExecutor {
+public class UnmuteCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
@@ -23,9 +23,8 @@ public class UnbanCommand implements CommandExecutor {
         punished.unban();
 
         HashMap<String, String> map = new HashMap<>();
-        map.put("punisher", commandSender.getName());
         map.put("player", target.getName());
-        Messages.get().sendMessage(commandSender, "bans.unbanned", map);
+        Messages.get().sendMessage(commandSender, "mutes.unmuted", map);
         return true;
     }
 }
