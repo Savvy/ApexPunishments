@@ -19,6 +19,10 @@ public interface Punishment {
 
     long getCreated();
 
+    void setActive(boolean active);
+
+    boolean isActive();
+
     default long getElapsed() {
         return getDuration() - ((System.currentTimeMillis() - getCreated()) / 1000);
     }
@@ -27,9 +31,9 @@ public interface Punishment {
         long time = (getDuration() == -1) ? Long.MAX_VALUE : (System.currentTimeMillis() - getCreated()) / 1000;
         if (time <= getDuration()) {
             ApexBans.getDatabase().executeUpdate("REPLACE INTO `?`" +
-                    "(uniqueId, reason, punisher, duration, startTime)" +
+                    "(uniqueId, reason, punisher, duration, startTime, active)" +
                     "VALUES (?, ?, ?, ?, ?);", getTable(), getUniqueId().toString(),
-                    getReason(), getPunisher(), getDuration(), getCreated());
+                    getReason(), getPunisher(), getDuration(), getCreated(), isActive());
         }
     }
 }

@@ -9,13 +9,15 @@ public class Ban implements Punishment {
     private String punisher;
     private long duration;
     private long created;
+    private boolean active;
 
-    public Ban(UUID uniqueId, String punisher, String reason, long duration, long created) {
+    public Ban(UUID uniqueId, String punisher, String reason, long duration, long created, boolean active) {
         this.uniqueId = uniqueId;
         this.punisher = punisher;
         this.reason = reason;
         this.duration = duration;
         this.created = created;
+        this.active = active;
     }
 
     @Override
@@ -46,5 +48,15 @@ public class Ban implements Punishment {
     @Override
     public long getCreated() {
         return created;
+    }
+
+    @Override
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Override
+    public boolean isActive() {
+        return active;
     }
 }

@@ -9,8 +9,9 @@ public class Mute implements Punishment {
     private String punisher;
     private long duration;
     private long created;
+    private boolean active;
 
-    public Mute(UUID uniqueId, String punisher, String reason, long duration, long startTime) {
+    public Mute(UUID uniqueId, String punisher, String reason, long duration, long startTime, boolean active) {
         this.uniqueId = uniqueId;
         this.punisher = punisher;
         this.reason = reason;
@@ -46,5 +47,14 @@ public class Mute implements Punishment {
     @Override
     public long getCreated() {
         return created;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    @Override
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
