@@ -1,10 +1,9 @@
 package io.apexcreations.apexbans.listeners;
 
 import io.apexcreations.apexbans.players.PunishedPlayer;
-import io.apexcreations.apexbans.players.PunishmentEntry;
+import io.apexcreations.apexbans.punishments.Punishment;
 import io.apexcreations.apexbans.utils.Messages;
 import io.apexcreations.apexbans.utils.TimeParser;
-import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -20,8 +19,8 @@ public class PlayerListeners implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
         PunishedPlayer player = PunishedPlayer.of(event.getPlayer());
         if (player.isMuted()) {
-            LinkedList<PunishmentEntry> entrySet = new LinkedList<>(player.getActiveMutes());
-            PunishmentEntry entry = entrySet.getFirst();
+            LinkedList<Punishment> entrySet = new LinkedList<>(player.getActiveMutes());
+            Punishment entry = entrySet.getFirst();
             String time = TimeParser.toString(entry.getElapsed());
 
             HashMap<String, String> map = new HashMap<>();
@@ -41,12 +40,12 @@ public class PlayerListeners implements Listener {
     public void onLogin(AsyncPlayerPreLoginEvent event) {
         PunishedPlayer player = PunishedPlayer.of(event.getUniqueId());
         if (player.isBanned()) {
-            LinkedList<PunishmentEntry> entrySet = new LinkedList<>(player.getActiveMutes());
-            PunishmentEntry entry = entrySet.getFirst();
+            LinkedList<Punishment> entrySet = new LinkedList<>(player.getActiveBans());
+            Punishment entry = entrySet.getFirst();
             HashMap<String, String> map = new HashMap<>();
             map.put("punisher", event.getName());
             map.put("nl", "\n");
-            map.put("player", entry.getPunisher());
+            map.put("players", entry.getPunisher());
             map.put("reason", entry.getReason());
             map.put("time", TimeParser.toString(entry.getDuration()));
             event.setKickMessage(Messages.get().getMessage("bans.activate", map));

@@ -1,5 +1,5 @@
 mute:
-  broadcast: '%punisher% muted %player% for %reason%'
+  broadcast: '%punisher% muted %players% for %reason%'
   activate: '&cYou were muted by &4%punisher% &cfor &4%reason%'
   timeLeft: '&cThis mute will last another %time%'
   silenced: '&cYou have been silenced!'
@@ -7,5 +7,5 @@ mute:
 
 bans:
   activate: '&cYou have been banned by &4%punisher% &cfor &4%reason%%nl%&cYou may appeal @ www.example.com'
-  punished: '&cYou have banned &4%player% &cfor &4%reason%'
-  broadcast: '&4%player% &chas been banned by &4%punisher% &cfor &4%reason%'
+  punished: '&cYou have banned &4%players% &cfor &4%reason%'
+  broadcast: '&4%players% &chas been banned by &4%punisher% &cfor &4%reason%'
