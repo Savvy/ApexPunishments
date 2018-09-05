@@ -9,6 +9,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -51,5 +52,11 @@ public class PlayerListeners implements Listener {
             event.setKickMessage(Messages.get().getMessage("bans.activate", map));
             event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_BANNED);
         }
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        PunishedPlayer player = PunishedPlayer.of(event.getPlayer().getUniqueId());
+        player.save();
     }
 }

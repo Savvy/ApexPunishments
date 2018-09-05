@@ -21,15 +21,28 @@ public class TimeParser {
 
     public static String toString(long seconds) {
         int day = (int) TimeUnit.SECONDS.toDays(seconds);
+        String timeLeft = null;
+        if (day > 0) {
+            timeLeft += day + " day(s) ";
+        }
         long hours = TimeUnit.SECONDS.toHours(seconds) -
                 TimeUnit.DAYS.toHours(day);
+        if (hours > 0) {
+            timeLeft += hours + " hour(s) ";
+        }
         long minute = TimeUnit.SECONDS.toMinutes(seconds) -
                 TimeUnit.DAYS.toMinutes(day) -
                 TimeUnit.HOURS.toMinutes(hours);
+        if (minute > 0) {
+            timeLeft += minute + " minute(s) ";
+        }
         long second = TimeUnit.SECONDS.toSeconds(seconds) -
                 TimeUnit.DAYS.toSeconds(day) -
                 TimeUnit.HOURS.toSeconds(hours) -
                 TimeUnit.MINUTES.toSeconds(minute);
-        return day + " day(s) " + hours + " hour(s) " + minute + " minute(s) " + second + " second(s)";
+        if (second > 0) {
+            timeLeft += second + " second(s)";
+        }
+        return timeLeft;
     }
 }
