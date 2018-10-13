@@ -18,7 +18,7 @@ public class UnbanCommand implements CommandExecutor {
             return false;
         }
 
-        OfflinePlayer target = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[0]));
+        OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
         PunishedPlayer punished = PunishedPlayer.of(target);
         punished.unban();
 

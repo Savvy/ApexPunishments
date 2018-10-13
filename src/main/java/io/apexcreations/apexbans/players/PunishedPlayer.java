@@ -25,8 +25,11 @@ public class PunishedPlayer {
         this.uniqueId = uniqueId;
         this.punishments = Sets.newConcurrentHashSet();
 
-        load();
-        ApexBans.getInstance().addPlayer(this);
+        try {
+            load();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean isMuted() {
@@ -56,11 +59,23 @@ public class PunishedPlayer {
     }
 
     public void mute(String staff, String reason, long duration) {
-        punishments.add(new Mute(uniqueId, staff, reason, duration, System.currentTimeMillis(), true));
+        try {
+            Punishment punishment = new Mute(uniqueId, staff, reason, duration, System.currentTimeMillis(), true);
+            punishment.save();
+            punishments.add(punishment);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void ban(String staff, String reason, long duration) {
-        punishments.add(new Ban(uniqueId, staff, reason, duration, System.currentTimeMillis(), true));
+        try {
+            Punishment punishment = new Ban(uniqueId, staff, reason, duration, System.currentTimeMillis(), true);
+            punishment.save();
+            punishments.add(punishment);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void unban() {
@@ -115,47 +130,40 @@ public class PunishedPlayer {
         return entries;
     }
 
-    public void load() {
-        try {
-            List<DbRow> rowList = ApexBans.getDatabase().getResults("SELECT * FROM `apex_bans` " +
-                    "WHERE `uniqueId`=?;", uniqueId.toString());
-            for (DbRow row : rowList) {
-                int id = row.getInt("id");
-                String punisher = row.getString("punisher");
-                String reason = row.getString("reason");
-                long startTime = row.getLong("startTime");
-                long duration = row.getLong("duration");
-                long time = (duration == -1) ? Long.MAX_VALUE : (System.currentTimeMillis() - startTime) / 1000;
-                boolean active = row.getInt("active") == 1;
-                if (time <= duration) {
-                    punishments.add(new Ban(uniqueId, punisher, reason, duration, startTime, active));
-                }
+    private void load() throws SQLException {
+        List<DbRow> rowList = ApexBans.getDatabase().getResults("SELECT * FROM `apex_bans` " +
+                "WHERE `uniqueId`=?;", uniqueId.toString());
+        for (DbRow row : rowList) {
+            int id = row.getInt("id");
+            String punisher = row.getString("punisher");
+            String reason = row.getString("reason");
+            long startTime = row.getLong("startTime");
+            long duration = row.getLong("duration");
+            long time = (duration == -1) ? Long.MAX_VALUE : (System.currentTimeMillis() - startTime) / 1000;
+            boolean active = row.getInt("active") == 1;
+            if (time <= duration) {
+                punishments.add(new Ban(uniqueId, punisher, reason, duration, startTime, active));
             }
-            rowList = ApexBans.getDatabase().getResults("SELECT * FROM `apex_mutes` " +
-                    "WHERE `uniqueId`=?;", uniqueId.toString());
-            for (DbRow row : rowList) {
-                int id = row.getInt("id");
-                String punisher = row.getString("punisher");
-                String reason = row.getString("reason");
-                long startTime = row.getLong("startTime");
-                long duration = row.getLong("duration");
-                boolean active = row.getInt("active") == 1;
-                long time = (duration == -1) ? Long.MAX_VALUE : (System.currentTimeMillis() - startTime) / 1000;
-                if (time <= duration && active) {
-                    punishments.add(new Ban(uniqueId, punisher, reason, duration, startTime, active));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+        rowList = ApexBans.getDatabase().getResults("SELECT * FROM `apex_mutes` " +
+                "WHERE `uniqueId`=?;", uniqueId.toString());
+        for (DbRow row : rowList) {
+            int id = row.getInt("id");
+            String punisher = row.getString("punisher");
+            String reason = row.getString("reason");
+            long startTime = row.getLong("startTime");
+            long duration = row.getLong("duration");
+            boolean active = row.getInt("active") == 1;
+            long time = (duration == -1) ? Long.MAX_VALUE : (System.currentTimeMillis() - startTime) / 1000;
+            if (time <= duration && active) {
+                punishments.add(new Ban(uniqueId, punisher, reason, duration, startTime, active));
+            }
+        }
+        ApexBans.getInstance().addPlayer(this);
     }
 
-    public void save() {
-        try {
-            for (Punishment entry : punishments) entry.save();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void save() throws SQLException {
+        for (Punishment entry : punishments) entry.save();
     }
 
     public UUID getUniqueId() {
@@ -178,6 +186,6 @@ public class PunishedPlayer {
     }
 
     public static PunishedPlayer of(String name) {
-        return of(Bukkit.getPlayerUniqueId(name));
+        return of(Bukkit.getOfflinePlayer(name));
     }
 }

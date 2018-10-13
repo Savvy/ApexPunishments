@@ -11,6 +11,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -29,9 +30,6 @@ public class PlayerListeners implements Listener {
             map.put("reason", (entry.getReason().isEmpty() ? "Spamming" : entry.getReason()));
             map.put("time", time);
             Messages.get().sendMessage(event.getPlayer(), "mute.activate", map);
-
-            map = new HashMap<>();
-            map.put("time", time);
             Messages.get().sendMessage(event.getPlayer(), "mute.timeLeft", map);
             event.setCancelled(true);
         }
@@ -56,7 +54,11 @@ public class PlayerListeners implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        PunishedPlayer player = PunishedPlayer.of(event.getPlayer().getUniqueId());
-        player.save();
+        try {
+            PunishedPlayer player = PunishedPlayer.of(event.getPlayer().getUniqueId());
+            player.save();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

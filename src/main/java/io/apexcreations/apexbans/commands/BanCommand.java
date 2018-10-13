@@ -30,7 +30,7 @@ public class BanCommand implements CommandExecutor {
         List<String> stringList = new ArrayList<>(Arrays.asList(args));
         String reason = stringList.subList(2, stringList.size()).toString().replace(", ", " ").replace("[", "").replace("]", "");
 
-        OfflinePlayer target = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[0]));
+        OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
         HashMap<String, String> map = new HashMap<>();
         map.put("punisher", commandSender.getName());
         map.put("nl", "\n");

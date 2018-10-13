@@ -19,7 +19,7 @@ public class MuteCommand implements CommandExecutor {
             return false;
         }
 
-        OfflinePlayer target = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[0]));
+        OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
         if (target.isOnline()) {
             Messages.get().sendMessage(commandSender, "mute.silenced", Collections.emptyMap());
         }

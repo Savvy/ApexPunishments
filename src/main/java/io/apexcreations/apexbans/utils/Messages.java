@@ -1,15 +1,16 @@
 package io.apexcreations.apexbans.utils;
 
-import java.io.File;
-import java.util.Collections;
-import java.util.Map;
-import java.util.logging.Logger;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
+
+import java.io.File;
+import java.util.Collections;
+import java.util.Map;
+import java.util.logging.Logger;
 
 public class Messages {
 
@@ -44,8 +45,7 @@ public class Messages {
         sendMessage(sender, message, Collections.emptyMap());
     }
 
-    public void sendMessage(CommandSender sender, String message,
-                            Map<String, String> placeholders) {
+    public void sendMessage(CommandSender sender, String message, Map<String, String> placeholders) {
         if (!isPresent(message)) {
             logger.severe("[Messages] Could not find message '" + message + "'!");
             return;
@@ -53,8 +53,7 @@ public class Messages {
         sender.sendMessage(translateAndReplace(config.getString(message), placeholders));
     }
 
-    public String getMessage(String message,
-                            Map<String, String> placeholders) {
+    public String getMessage(String message, Map<String, String> placeholders) {
         if (!isPresent(message)) {
             logger.severe("[Messages] Could not find message '" + message + "'!");
             return null;
