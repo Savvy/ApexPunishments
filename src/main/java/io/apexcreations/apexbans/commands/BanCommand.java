@@ -1,5 +1,6 @@
 package io.apexcreations.apexbans.commands;
 
+import io.apexcreations.ApexCommand;
 import io.apexcreations.apexbans.players.PunishedPlayer;
 import io.apexcreations.apexbans.utils.Messages;
 import io.apexcreations.apexbans.utils.TimeParser;
@@ -14,10 +15,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class BanCommand implements CommandExecutor {
+public class BanCommand extends ApexCommand {
+
+    public BanCommand() {
+        super("ban", "The ban command is used to prevent players from joining.", "apexbans.command.ban", false);
+        setUsage("/<command> <player> [time] [reason]");
+    }
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
+    public boolean executeCommand(CommandSender commandSender, String label, String[] args) {
         if (args.length <= 0) {
             return false;
         }

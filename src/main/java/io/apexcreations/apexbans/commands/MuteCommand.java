@@ -1,5 +1,6 @@
 package io.apexcreations.apexbans.commands;
 
+import io.apexcreations.ApexCommand;
 import io.apexcreations.apexbans.players.PunishedPlayer;
 import io.apexcreations.apexbans.utils.Messages;
 import io.apexcreations.apexbans.utils.TimeParser;
@@ -11,10 +12,15 @@ import org.bukkit.command.CommandSender;
 
 import java.util.*;
 
-public class MuteCommand implements CommandExecutor {
+public class MuteCommand extends ApexCommand {
+
+    public MuteCommand() {
+        super("mute", "The mute command is used to prevent players from speaking.", "apexbans.command.mute", false);
+        setUsage("/<command> <player> [time] [reason]");
+    }
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
+    public boolean executeCommand(CommandSender commandSender, String label, String[] args) {
         if (args.length <= 0) {
             return false;
         }

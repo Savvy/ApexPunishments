@@ -155,8 +155,8 @@ public class PunishedPlayer {
             long duration = row.getLong("duration");
             boolean active = row.getInt("active") == 1;
             long time = (duration == -1) ? Long.MAX_VALUE : (System.currentTimeMillis() - startTime) / 1000;
-            if (time <= duration && active) {
-                punishments.add(new Ban(uniqueId, punisher, reason, duration, startTime, active));
+            if (time <= duration) {
+                punishments.add(new Mute(uniqueId, punisher, reason, duration, startTime, active));
             }
         }
         ApexBans.getInstance().addPlayer(this);

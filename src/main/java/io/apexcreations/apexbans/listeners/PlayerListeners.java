@@ -1,5 +1,6 @@
 package io.apexcreations.apexbans.listeners;
 
+import io.apexcreations.apexbans.ApexBans;
 import io.apexcreations.apexbans.players.PunishedPlayer;
 import io.apexcreations.apexbans.punishments.Punishment;
 import io.apexcreations.apexbans.utils.Messages;
@@ -7,9 +8,7 @@ import io.apexcreations.apexbans.utils.TimeParser;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -31,6 +30,14 @@ public class PlayerListeners implements Listener {
             map.put("time", time);
             Messages.get().sendMessage(event.getPlayer(), "mute.activate", map);
             Messages.get().sendMessage(event.getPlayer(), "mute.timeLeft", map);
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onCommandDispatch(PlayerCommandPreprocessEvent event) {
+        PunishedPlayer player = PunishedPlayer.of(event.getPlayer());
+        if (player.isMuted() && ApexBans.getInstance().getConfig().getStringList("blocked-cmd").contains(event.getMessage())) {
             event.setCancelled(true);
         }
     }

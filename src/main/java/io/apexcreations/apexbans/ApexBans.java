@@ -4,9 +4,6 @@ import co.aikar.idb.BukkitDB;
 import co.aikar.idb.Database;
 import io.apexcreations.CommandHandler;
 import io.apexcreations.apexbans.commands.BanCommand;
-import io.apexcreations.apexbans.commands.MuteCommand;
-import io.apexcreations.apexbans.commands.UnbanCommand;
-import io.apexcreations.apexbans.commands.UnmuteCommand;
 import io.apexcreations.apexbans.listeners.PlayerListeners;
 import io.apexcreations.apexbans.players.PunishedPlayer;
 import io.apexcreations.apexbans.punishments.PunishmentQueries;
@@ -31,8 +28,6 @@ public final class ApexBans extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        Messages.init(this);
-
         saveDefaultConfig();
 
         database = BukkitDB.createHikariDatabase(this, getConfig().getString("mysql.username"),
@@ -46,10 +41,10 @@ public final class ApexBans extends JavaPlugin {
             e.printStackTrace();
         }
 
-        getCommand("mute").setExecutor(new MuteCommand());
-        getCommand("ban").setExecutor(new BanCommand());
-        getCommand("unban").setExecutor(new UnbanCommand());
-        getCommand("unmute").setExecutor(new UnmuteCommand());
+        Messages.init(this);
+
+        commandHandler = CommandHandler.init(this);
+        commandHandler.register(new BanCommand());
 
         Bukkit.getPluginManager().registerEvents(new PlayerListeners(), this);
     }
@@ -78,5 +73,9 @@ public final class ApexBans extends JavaPlugin {
 
     public static Database getDatabase() {
         return database;
+    }
+
+    public CommandHandler getCommandHandler() {
+        return commandHandler;
     }
 }

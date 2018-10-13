@@ -1,5 +1,6 @@
 package io.apexcreations.apexbans.commands;
 
+import io.apexcreations.ApexCommand;
 import io.apexcreations.apexbans.players.PunishedPlayer;
 import io.apexcreations.apexbans.utils.Messages;
 import org.bukkit.Bukkit;
@@ -10,10 +11,15 @@ import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
 
-public class UnbanCommand implements CommandExecutor {
+public class UnbanCommand extends ApexCommand {
+
+    public UnbanCommand(String name) {
+        super("unban", "Unban a player allowing them to join", "apexbans.command.unban", false);
+        setUsage("/<command> <player>");
+    }
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
+    public boolean executeCommand(CommandSender commandSender, String s, String[] args) {
         if (args.length <= 0) {
             return false;
         }

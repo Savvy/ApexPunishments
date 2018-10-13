@@ -1,5 +1,6 @@
 package io.apexcreations.apexbans.commands;
 
+import io.apexcreations.ApexCommand;
 import io.apexcreations.apexbans.players.PunishedPlayer;
 import io.apexcreations.apexbans.utils.Messages;
 import org.bukkit.Bukkit;
@@ -10,10 +11,14 @@ import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
 
-public class UnmuteCommand implements CommandExecutor {
+public class UnmuteCommand extends ApexCommand {
+
+    public UnmuteCommand(String name) {
+        super("unmute", "Unmute a player allowing them to speak", "", false);
+    }
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
+    public boolean executeCommand(CommandSender commandSender, String s, String[] args) {
         if (args.length <= 0) {
             return false;
         }

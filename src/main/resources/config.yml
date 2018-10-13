@@ -1,5 +1,14 @@
+# mySQL information for saving
 mysql:
+  enabled: true
   hostname: '127.0.0.1:3306'
   username: 'root'
   password: ''
   database: 'apexbans'
+
+# Blocked commands when a player is muted
+blocked-cmd:
+- 'me'
+- 'msg'
+- 'tell'
+# etc..
